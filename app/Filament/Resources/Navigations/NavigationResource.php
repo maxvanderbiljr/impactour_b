@@ -24,6 +24,10 @@ class NavigationResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    protected static ?string $modelLabel = 'Menu';
+
+    protected static ?string $pluralModelLabel = 'Menus';
+
     protected static ?string $recordTitleAttribute = 'nome';
 
     public static function form(Schema $schema): Schema
@@ -58,11 +62,56 @@ class NavigationResource extends Resource
         ];
     }
 
-    public static function getRecordRouteBindingEloquentQuery(): Builder
-    {
-        return parent::getRecordRouteBindingEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
-    }
+    // public static function getRecordRouteBindingEloquentQuery(): Builder
+    // {
+    //     return parent::getRecordRouteBindingEloquentQuery()
+    //         ->withoutGlobalScopes([
+    //             SoftDeletingScope::class,
+    //         ]);
+    // }
+
+    // /**
+    //  * Exibe o menu "Menus" apenas para admin.
+    //  */
+    // public static function shouldRegisterNavigation(): bool
+    // {
+    //     $user = auth()->user();
+    //     return $user->role === 'admin';
+    // }
+
+    // /**
+    //  * Permite visualizar menus apenas para admin.
+    //  */
+    // public static function canViewAny(): bool
+    // {
+    //     $user = auth()->user();
+    //     return $user->role === 'admin';
+    // }
+
+    // /**
+    //  * Permite criar menus apenas para admin.
+    //  */
+    // public static function canCreate(): bool
+    // {
+    //     $user = auth()->user();
+    //     return $user->role === 'admin';
+    // }
+
+    // /**
+    //  * Permite editar menus apenas para admin.
+    //  */
+    // public static function canEdit($record): bool
+    // {
+    //     $user = auth()->user();
+    //     return $user->role === 'admin';
+    // }
+
+    // /**
+    //  * Permite excluir menus apenas para admin.
+    //  */
+    // public static function canDelete($record): bool
+    // {
+    //     $user = auth()->user();
+    //     return $user->role === 'admin';
+    // }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Filament\Resources\ExperienceHowItWorks\Schemas;
+namespace App\Filament\Resources\HowItWorks\Schemas;
 
 use Filament\Schemas\Schema;
 
-class ExperienceHowItWorksInfolist
+class HowItWorksForm
 {
     public static function configure(Schema $schema): Schema
     {

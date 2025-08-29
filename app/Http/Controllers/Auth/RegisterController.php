@@ -34,4 +34,4 @@ class RegisterController extends Controller
 
         return redirect()->route('filament.admin.auth.login'); 
     }
-}
+} 

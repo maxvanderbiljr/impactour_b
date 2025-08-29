@@ -6,17 +6,15 @@ use App\Filament\Resources\Experiences\Pages\CreateExperience;
 use App\Filament\Resources\Experiences\Pages\EditExperience;
 use App\Filament\Resources\Experiences\Pages\ListExperiences;
 use App\Filament\Resources\Experiences\Pages\ViewExperience;
-use App\Filament\Resources\Experiences\Schemas\ExperienceForm;
 use App\Filament\Resources\Experiences\Schemas\ExperienceInfolist;
 use App\Filament\Resources\Experiences\Tables\ExperiencesTable;
 use App\Models\Experience;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Forms;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ExperienceResource extends Resource
 {
@@ -24,13 +22,45 @@ class ExperienceResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $recordTitleAttribute = 'nome';
+    protected static ?string $modelLabel = 'Experiência';
 
+    protected static ?string $pluralModelLabel = 'Experiências';
+
+    protected static ?string $recordTitleAttribute = 'titulo';
+
+    /**
+     * Formulário de criação/edição
+     */
     public static function form(Schema $schema): Schema
     {
-        return ExperienceForm::configure($schema);
+        return $schema->schema([
+            Forms\Components\TextInput::make('titulo')
+                ->label('Título')
+                ->required()
+                ->maxLength(255),
+
+            Forms\Components\Textarea::make('descricao')
+                ->label('Descrição')
+                ->required()
+                ->rows(5),
+
+            Forms\Components\TextInput::make('localizacao')
+                ->label('Localização')
+                ->maxLength(255),
+
+            Forms\Components\DatePicker::make('data')
+                ->label('Data'),
+        ]);
     }
 
+     /**
+     * Tabela de listagem
+     */
+
+     
+    /**
+     * Infolist (visualização de detalhes)
+     */
     public static function infolist(Schema $schema): Schema
     {
         return ExperienceInfolist::configure($schema);
@@ -43,26 +73,17 @@ class ExperienceResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
+
 
     public static function getPages(): array
     {
         return [
-            'index' => ListExperiences::route('/'),
+            'index'  => ListExperiences::route('/'),
             'create' => CreateExperience::route('/create'),
             'view' => ViewExperience::route('/{record}'),
-            'edit' => EditExperience::route('/{record}/edit'),
+            'edit'   => EditExperience::route('/{record}/edit'),
         ];
-    }
-
-    public static function getRecordRouteBindingEloquentQuery(): Builder
-    {
-        return parent::getRecordRouteBindingEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
     }
 }

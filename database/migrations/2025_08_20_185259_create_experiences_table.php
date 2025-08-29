@@ -11,9 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('experiences', function (Blueprint $table) {
+            Schema::create('experiences', function (Blueprint $table) {
             $table->id();
+            $table->string('titulo');
+            $table->text('descricao');
+            $table->string('localizacao')->nullable();
+            $table->date('data')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

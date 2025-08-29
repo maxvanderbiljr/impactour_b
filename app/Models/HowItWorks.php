@@ -6,5 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class HowItWorks extends Model
 {
-    //
+    protected $fillable = [
+        'etapa',
+        'titulo',
+        'descricao',
+    ];
 }

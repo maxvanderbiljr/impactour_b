@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('how_it_works', function (Blueprint $table) {
             $table->id();
+            $table->string('etapa');
+            $table->string('titulo');
+            $table->text('descricao');
             $table->timestamps();
         });
     }

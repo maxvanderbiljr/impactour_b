@@ -6,20 +6,16 @@
             Experiências criadas e conduzidas em colaboração com comunidades locais.
         </p>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="p-6 bg-green-50 rounded-xl shadow">
-                <h3 class="text-xl font-semibold mb-2">Comunidades Quilombolas</h3>
-                <p class="text-gray-600">Vivências de cultura, dança e ancestralidade.</p>
-            </div>
-            <div class="p-6 bg-green-50 rounded-xl shadow">
-                <h3 class="text-xl font-semibold mb-2">Ribeirinhas & Amazônia</h3>
-                <p class="text-gray-600">Reflorestamento e práticas sustentáveis.</p>
-            </div>
-            <div class="p-6 bg-green-50 rounded-xl shadow">
-                <h3 class="text-xl font-semibold mb-2">Turismo Rural</h3>
-                <p class="text-gray-600">Vivências agrícolas e gastronomia local.</p>
-            </div>
+            @foreach($comunidades as $comunidade)
+                <div class="p-6 bg-green-50 rounded-xl shadow">
+                    <h3 class="text-xl font-semibold mb-2">{{ $comunidade->nome }}</h3>
+                    <p class="text-gray-600">{{ $comunidade->descricao }}</p>
+                    @if($comunidade->imagem)
+                        <img src="{{ asset('storage/' . $comunidade->imagem) }}" alt="{{ $comunidade->nome }}" class="mx-auto mt-4 rounded-lg max-h-40">
+                    @endif
+                </div>
+            @endforeach
         </div>
     </div>
 </section>
-
 </div>

@@ -13,7 +13,11 @@ class ListExperiences extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()
+                ->label('Nova Experiência') // Altere o texto do botão
+                ->color('success')       // Altere a cor (ex: 'primary', 'success', 'danger')
+                ->icon('heroicon-o-plus'),
         ];
     }
+
 }

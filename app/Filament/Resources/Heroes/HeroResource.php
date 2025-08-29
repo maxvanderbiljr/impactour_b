@@ -21,6 +21,10 @@ class HeroResource extends Resource
 
     protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-photo';
 
+    protected static ?string $modelLabel = 'Slide';
+
+    protected static ?string $pluralModelLabel = 'Slides';
+
     public static function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
     {
         return $schema->schema([
@@ -75,4 +79,5 @@ class HeroResource extends Resource
             'edit'   => Pages\EditHero::route('/{record}/edit'),
         ];
     }
+
 }
