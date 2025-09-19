@@ -16,7 +16,6 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ImpactResource extends Resource
 {
@@ -25,10 +24,24 @@ class ImpactResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     protected static ?string $modelLabel = 'Impacto';
-
     protected static ?string $pluralModelLabel = 'Impactos';
-
     protected static ?string $recordTitleAttribute = 'nome';
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()->can('view impactos');
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        if (!auth()->user()->hasRole('admin')) {
+            $query->where('user_id', auth()->id());
+        }
+
+        return $query;
+    }
 
     public static function form(Schema $schema): Schema
     {
@@ -47,9 +60,7 @@ class ImpactResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
@@ -61,58 +72,4 @@ class ImpactResource extends Resource
             'edit' => EditImpact::route('/{record}/edit'),
         ];
     }
-
-    // public static function getRecordRouteBindingEloquentQuery(): Builder
-    // {
-    //     return parent::getRecordRouteBindingEloquentQuery()
-    //         ->withoutGlobalScopes([
-    //             SoftDeletingScope::class,
-    //         ]);
-    // }
-    // // ...existing code...
-
-    // /**
-    //  * Exibe o menu "Impactos" apenas para admin.
-    //  */
-    // public static function shouldRegisterNavigation(): bool
-    // {
-    //     $user = auth()->user();
-    //     return $user->role === 'admin';
-    // }
-
-    // /**
-    //  * Permite visualizar impactos apenas para admin.
-    //  */
-    // public static function canViewAny(): bool
-    // {
-    //     $user = auth()->user();
-    //     return $user->role === 'admin';
-    // }
-
-    // /**
-    //  * Permite criar impactos apenas para admin.
-    //  */
-    // public static function canCreate(): bool
-    // {
-    //     $user = auth()->user();
-    //     return $user->role === 'admin';
-    // }
-
-    // /**
-    //  * Permite editar impactos apenas para admin.
-    //  */
-    // public static function canEdit($record): bool
-    // {
-    //     $user = auth()->user();
-    //     return $user->role === 'admin';
-    // }
-
-    // /**
-    //  * Permite excluir impactos apenas para admin.
-    //  */
-    // public static function canDelete($record): bool
-    // {
-    //     $user = auth()->user();
-    //     return $user->role === 'admin';
-    // }
 }

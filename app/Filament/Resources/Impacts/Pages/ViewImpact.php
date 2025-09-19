@@ -13,7 +13,7 @@ class ViewImpact extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            EditAction::make(),
+            EditAction::make()->visible(fn() => auth()->user()->can('edit impactos')),
         ];
     }
 }

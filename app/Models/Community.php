@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -14,6 +13,28 @@ class Community extends Model implements HasMedia
     protected $fillable = [
         'nome',
         'descricao',
-        // Não precisa adicionar 'imagem' aqui, pois será gerenciado pela Media Library
+        'localizacao',
+        'data',
+        'user_id',
+        'community_id',
+        'traveler_id',
     ];
+
+    // Quem criou a experiência
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    // A qual comunidade pertence
+    public function community()
+    {
+        return $this->belongsTo(Community::class);
+    }
+
+    // Caso queira diferenciar viajante do user normal
+    public function traveler()
+    {
+        return $this->belongsTo(User::class, 'traveler_id');
+    }
 }

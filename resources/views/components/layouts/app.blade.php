@@ -6,8 +6,14 @@
 
         <title>{{ $title ?? 'Page Title' }}</title>
          @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @livewireStyles
     </head>
     <body>
+    <x-layouts.navigation />
+
         {{ $slot }}
+
+    <x-layouts.footer />
+         @livewireScripts
     </body>
 </html>

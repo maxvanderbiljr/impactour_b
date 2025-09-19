@@ -12,6 +12,7 @@ use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use App\Models\Community;
 use BackedEnum;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\TextArea;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -39,7 +40,7 @@ class CommunityResource extends Resource
                 ->label('Nome')
                 ->required()
                 ->maxLength(255),
-            TextInput::make('descricao')
+            TextArea::make('descricao')
                 ->label('Descrição')
                 ->maxLength(255),
             SpatieMediaLibraryFileUpload::make('image')

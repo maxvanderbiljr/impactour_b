@@ -17,9 +17,9 @@ class EditImpact extends EditRecord
     {
         return [
             ViewAction::make(),
-            DeleteAction::make(),
-            ForceDeleteAction::make(),
-            RestoreAction::make(),
+            DeleteAction::make()->visible(fn() => auth()->user()->can('delete impactos')),
+            ForceDeleteAction::make()->visible(fn() => auth()->user()->can('delete impactos')),
+            RestoreAction::make()->visible(fn() => auth()->user()->can('edit impactos')),
         ];
     }
 }

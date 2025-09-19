@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('imagem')->nullable();
             $table->softDeletes(); // Adicione esta linha
             $table->timestamps();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
         });
     }
 

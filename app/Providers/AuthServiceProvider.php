@@ -23,16 +23,16 @@ class AuthServiceProvider extends ServiceProvider
     /**
      * O array de policies do aplicativo.
      */
-    protected $policies = [
-        User::class => UserPolicy::class,
-        Community::class => CommunityPolicy::class,
-        Experience::class => ExperiencePolicy::class,
-        Hero::class => HeroPolicy::class,
-        Impact::class => ImpactPolicy::class,
-        Navigation::class => NavigationPolicy::class,
-        HowItWorks::class => HowItWorksPolicy::class,
-        // Adicione outras policies aqui conforme seus models/resources
-    ];
+    // protected $policies = [
+    //     User::class => UserPolicy::class,
+    //     Community::class => CommunityPolicy::class,
+    //     Experience::class => ExperiencePolicy::class,
+    //     Hero::class => HeroPolicy::class,
+    //     Impact::class => ImpactPolicy::class,
+    //     Navigation::class => NavigationPolicy::class,
+    //     HowItWorks::class => HowItWorksPolicy::class,
+    //     // Adicione outras policies aqui conforme seus models/resources
+    // ];
 
     /**
      * Registra quaisquer serviços de autenticação/autorização.

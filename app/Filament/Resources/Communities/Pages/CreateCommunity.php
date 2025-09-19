@@ -9,29 +9,32 @@ class CreateCommunity extends CreateRecord
 {
     protected static string $resource = CommunityResource::class;
 
-  protected function getRedirectUrl(): string
+    public function mount(): void
     {
-       return $this->getResource()::getUrl('index');
+        parent::mount();
+
+        if (!auth()->user()->can('create comunidades')) {
+            abort(403, 'Acesso negado');
+        }
     }
 
-    protected  function getFormActions(): array
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        $data['user_id'] = auth()->id();
+        return $data;
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
+    protected function getFormActions(): array
     {
         return [
-           $this->getCreateFormAction()
-                ->label('Cadastrar')
-                ->color('success'),
-
-           $this->getCreateAnotherFormAction()
-                ->label('Salvar e Criar Novo')        
-                ->color('gray'),
-
-            $this->getCancelFormAction()
-                ->label('Cancelar')
-                ->color('primary'),
+            $this->getCreateFormAction()->label('Cadastrar')->color('success'),
+            $this->getCreateAnotherFormAction()->label('Salvar e Criar Novo')->color('gray'),
+            $this->getCancelFormAction()->label('Cancelar')->color('primary'),
         ];
     }
-
-
-
-
 }

@@ -12,12 +12,15 @@ use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
+use Filament\Navigation\NavigationGroup;
+use Filament\Navigation\NavigationItem;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use App\Filament\Widgets\AccountCustomWidget;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -39,9 +42,9 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
-            ])
+                    AccountCustomWidget::class,
+                    FilamentInfoWidget::class,     
+                ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -55,6 +58,46 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->navigationGroups([
+                NavigationGroup::make('Conteúdo')
+                    ->items($this->getNavigationItems()),
             ]);
+    }
+
+    /**
+     * Retorna o menu lateral dinâmico baseado nas permissões do usuário
+     */
+    protected function getNavigationItems(): array
+    {
+        $items = [];
+
+        $user = auth()->user();
+
+        if (!$user) {
+            return $items;
+        }
+
+        if ($user->can('view impactos')) {
+            $items[] = NavigationItem::make('Impactos')
+                ->url(route('filament.resources.impacts.index'))
+                ->icon('heroicon-o-rectangle-stack');
+        }
+
+        if ($user->can('view comunidades')) {
+            $items[] = NavigationItem::make('Comunidades')
+                ->url(route('filament.resources.comunidades.index'))
+                ->icon('heroicon-o-users');
+        }
+
+        if ($user->can('view experiencias')) {
+            $items[] = NavigationItem::make('Experiências')
+                ->url(route('filament.resources.experiencias.index'))
+                ->icon('heroicon-o-briefcase');
+        }
+
+        // Aqui você pode adicionar outros resources conforme necessário
+
+        return $items;
     }
 }

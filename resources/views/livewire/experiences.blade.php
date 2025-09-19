@@ -9,6 +9,9 @@
                 @foreach($experiences as $experience)
                     <div class="bg-white rounded-xl shadow p-6 hover:shadow-lg transition">
                         <h3 class="text-xl font-semibold mb-2">{{ $experience->titulo }}</h3>
+                        @if($experience->getFirstMediaUrl('experiencias'))
+                                <img src="{{ $experience->getFirstMediaUrl('experiencias') }}" alt="{{ $experience->titulo }}" class="mx-auto mt-4 rounded-lg max-h-40">
+                            @endif
                         <p class="text-gray-600 mb-4">{{ $experience->descricao }}</p>
                                 <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">
                                     Saiba mais
